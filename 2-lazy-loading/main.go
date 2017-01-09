@@ -40,7 +40,7 @@ func handleFile(inputfile, outputfile string) {
 }
 
 func main() {
-	handleFile("input.txt", "output.txt")
+	handleFile("lazy_loading.txt", "output_final.txt")
 }
 
 func TripsNeeded(boxWeights []int) (trips int) {
