@@ -89,19 +89,13 @@ func ParseCases(filein io.Reader) (ts []TestCase, err error) {
 	return
 }
 
-func SolveCases(ts []TestCase) (results []TestResult) {
-	results = make([]TestResult, len(ts))
-
-	for i := 0; i < len(ts); i++ {
-		results[i] = ts[i].Solve()
-	}
-
-	return
-}
-
 func main() {
-	filein, _ := os.Open(PROBLEM_NAME + ".txt")
+	filein, err := os.Open(PROBLEM_NAME + ".txt")
 	defer filein.Close()
+	if err != nil {
+		fmt.Printf("Did you mean to run go test? \n\t%v\n", err.Error())
+		return
+	}
 
 	cases, _ := ParseCases(filein)
 
