@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io"
 	"math"
@@ -23,7 +24,7 @@ type TestResult int
 
 // Parse a single test case from an io.Reader, including consuming the newline
 // following the last line.
-func ParseCase(filein io.Reader) (t TestCase, err error) {
+func ParseCase(filein *bufio.Reader) (t TestCase, err error) {
 	_, err = fmt.Fscanf(filein, "%v\n", &t.numBoxes)
 	if err != nil {
 		return
@@ -71,7 +72,7 @@ func OutputResult(testID int, result TestResult) string {
 	return fmt.Sprintf("Case #%d: %v\n", testID+1, result)
 }
 
-func ParseCases(filein io.Reader) (ts []TestCase, err error) {
+func ParseCases(filein *bufio.Reader) (ts []TestCase, err error) {
 	var numCases int
 	_, err = fmt.Fscanf(filein, "%v\n", &numCases)
 	if err != nil {
@@ -92,12 +93,14 @@ func ParseCases(filein io.Reader) (ts []TestCase, err error) {
 func main() {
 	filein, err := os.Open(PROBLEM_NAME + ".txt")
 	defer filein.Close()
+	bufin := bufio.NewReader(filein)
+
 	if err != nil {
 		fmt.Printf("Did you mean to run go test? \n\t%v\n", err.Error())
 		return
 	}
 
-	cases, _ := ParseCases(filein)
+	cases, _ := ParseCases(bufin)
 
 	fileout, _ := os.Create(PROBLEM_NAME + "_output.txt")
 	defer fileout.Close()
