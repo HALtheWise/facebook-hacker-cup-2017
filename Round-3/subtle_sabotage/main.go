@@ -31,7 +31,7 @@ func ParseCase(filein *bufio.Reader) (t TestCase, err error) {
 }
 
 func littleSolve(M, N, K int) (opts []int) {
-	if 2*K+3 <= M {
+	if 2*K+3 <= M && K+1 <= N{
 		// Top and bottom touch case
 		opts = append(opts, int(math.Ceil(float64(N)/float64(K))))
 	}
